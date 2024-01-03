@@ -4,6 +4,10 @@ const dotenv = require('dotenv').config();
 const cors = require('cors');
 
 
+// Include routers
+const productRouter = require('./routes/ProductRouter');
+
+
 const app = express();
 
 
@@ -13,6 +17,10 @@ app.use(cors({
 }));
 
 app.use(express.json());
+
+
+// Routers
+app.use('/api/products', productRouter);
 
 
 app.listen(process.env.PORT || 3000, () => {
