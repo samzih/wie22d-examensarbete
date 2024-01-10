@@ -39,9 +39,9 @@ function Home() {
         <>
             <Container fluid='md' className='mt-5'>
                 <Row xxl={3}>
-                    {featuredProducts.map((product, id) => (
-                        <Col key={id} lg={true}>
-                            <FeaturedProductCard title={product.name} text={product.description} img={product.images[0]} />
+                    {featuredProducts.map((product) => (
+                        <Col key={product.id} lg={true}>
+                            <FeaturedProductCard id={product.id} title={product.name} text={product.description} img={product.images[0]} />
                         </Col>
                     ))}
                 </Row>
@@ -49,9 +49,9 @@ function Home() {
 
             <Container fluid='md' className='mt-5'>
                 <Row xxl={3}>
-                    {currentProducts.map((product, id) => (
-                        <Col key={id} lg={true}>
-                            <StandardProductCard img={product.images[0]} title={product.name} subtitle={product.description} cpu={product.metadata.processor} gpu={product.metadata.graphics} ram={product.metadata.ram} price={product.default_price.unit_amount} />
+                    {currentProducts.map((product) => (
+                        <Col key={product.id} lg={true}>
+                            <StandardProductCard id={product.id} img={product.images[0]} title={product.name} subtitle={product.description} cpu={product.metadata.processor} gpu={product.metadata.graphics} ram={product.metadata.ram} price={product.default_price.unit_amount} />
                         </Col>
                     ))}
                 </Row>
