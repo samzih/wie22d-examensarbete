@@ -11,7 +11,7 @@ import logo from '../../assets/react.svg';
 function NavigationBar() {
     return (
         <>
-            <Navbar bg='dark' data-bs-theme='dark' fixed='top'>
+            <Navbar bg='dark' data-bs-theme='dark' sticky='top'>
                 <Container>
 
                     <Navbar.Brand as={Link} to='/'>

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Card, ListGroup } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 
 function StandardProductCard(props) {
@@ -10,7 +11,9 @@ function StandardProductCard(props) {
         <Card className='text-start border-0'>
 
             <div className='rounded-0 p-5 bg-light'>
-                <Card.Img variant='top' src={props.img} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} style={{ transition: 'ease-in-out 0.2s', transform: `${hovered ? 'scale(1.05)' : 'scale(1)'}` }} />
+                <Link to={`/product/${props.id}`}>
+                    <Card.Img variant='top' src={props.img} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} style={{ transition: 'ease-in-out 0.2s', transform: `${hovered ? 'scale(1.05)' : 'scale(1)'}` }} />
+                </Link>
             </div>
 
             <ListGroup variant='flush'>
@@ -40,6 +43,7 @@ function StandardProductCard(props) {
 
 
 StandardProductCard.propTypes = {
+    id: PropTypes.string,
     img: PropTypes.string,
     title: PropTypes.string,
     subtitle: PropTypes.string,
