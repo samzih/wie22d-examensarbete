@@ -2,6 +2,7 @@ import React from 'react'
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import Badge from 'react-bootstrap/Badge'
 import { Link } from 'react-router-dom';
 import { BsPerson, BsCart3 } from "react-icons/bs";
 import Stack from 'react-bootstrap/Stack';
@@ -34,8 +35,13 @@ function NavigationBar() {
                                     <p className='text-light m-0'>Skapa konto</p>
                                 </div>
                             </Stack>
+                            <div style={{ position: 'relative' }}>
+                                <Badge pill bg='success' style={{ position: 'absolute', top: '-5px', right: '-5px' }}>
+                                    {0}
+                                </Badge>
+                                <BsCart3 color='grey' size={37} />
+                            </div>
 
-                            <BsCart3 color='grey' size={37} />
                         </Stack>
 
                     </Nav>
