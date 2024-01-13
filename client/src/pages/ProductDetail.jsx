@@ -1,14 +1,15 @@
-import { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams, } from 'react-router-dom';
-import { useProductContext } from '../context/ProductContext';
+import { useEffect, useState } from 'react'
+import { Link, useParams, } from 'react-router-dom'
+import { useProductContext } from '../context/ProductContext'
+import { useCartContext } from '../context/CartContext'
 
-import { Image, Container, Figure, Col, Row, Stack, Button, Breadcrumb } from 'react-bootstrap';
+import { Image, Container, Figure, Col, Row, Stack, Button, Breadcrumb } from 'react-bootstrap'
 
 
 function ProductDetail() {
     const { id } = useParams();
     const { product, setProduct, fetchProduct } = useProductContext();
-    const navigate = useNavigate();
+    const { addToCart } = useCartContext();
 
 
     useEffect(() => {
@@ -54,7 +55,7 @@ function ProductDetail() {
                                         <li><span className='fw-medium'>RAM-minne:</span> {product.metadata.ram}</li>
                                         <li><span className='fw-medium'>Grafikkort:</span> {product.metadata.graphics}</li>
                                         <li><span className='fw-medium'>Primär lagring:</span> {product.metadata.primary_storage}</li>
-                                        <li><span className='fw-medium'>Nätaggregat / PSU:</span> {product.metadata.power_supply}</li>
+                                        <li><span className='fw-medium'>Nätaggregat:</span> {product.metadata.power_supply}</li>
                                         <li><span className='fw-medium'>Nätverk:</span> {product.metadata.wifi}</li>
                                         <li><span className='fw-medium'>Operativ System:</span> {product.metadata.operating_system}</li>
                                         <li><span className='fw-medium'>Mått:</span> {product.metadata.dimensions}</li>
@@ -63,7 +64,7 @@ function ProductDetail() {
                                 <Container>
                                     <Stack className='text-start' gap={2}>
                                         <h2>{`${product.default_price.unit_amount / 100} kr`}</h2>
-                                        <Button size='lg' className='fw-semibold' variant='primary'>Lägg i varukorg</Button>
+                                        <Button onClick={() => addToCart(product)} size='lg' className='fw-semibold' variant='primary'>Lägg i varukorg</Button>
                                     </Stack>
                                 </Container>
                             </Stack>

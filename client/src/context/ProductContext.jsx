@@ -1,5 +1,5 @@
-import { createContext, useContext, useState, useEffect } from 'react';
-
+import { createContext, useContext, useState, useEffect } from 'react'
+import shuffle from '../utils/shuffleArray'
 
 const ProductContext = createContext({
     products: [],
@@ -8,6 +8,7 @@ const ProductContext = createContext({
     product: {},
     setProduct: () => { },
     fetchProduct: () => { },
+    featuredProducts: [],
 });
 
 
@@ -16,6 +17,7 @@ export const useProductContext = () => useContext(ProductContext);
 
 const ProductProvider = ({ children }) => {
     const [products, setProducts] = useState([]);
+    const [featuredProducts, setFeaturedProducts] = useState([]);
     const [product, setProduct] = useState({});
 
 
@@ -24,8 +26,13 @@ const ProductProvider = ({ children }) => {
         const response = await fetch('/api/products');
         const data = await response.json();
 
-        setProducts(data.data)
+        setProducts(data.data);
     }
+
+
+    useEffect(() => {
+        setFeaturedProducts(shuffle(products).slice(0, 3));
+    }, [products])
 
 
     // Fetch individual product
@@ -40,7 +47,7 @@ const ProductProvider = ({ children }) => {
 
     return (
         <div>
-            <ProductContext.Provider value={{ fetchProducts, products, setProducts, product, setProduct, fetchProduct }}>
+            <ProductContext.Provider value={{ fetchProducts, products, setProducts, product, setProduct, fetchProduct, featuredProducts }}>
                 {children}
             </ProductContext.Provider>
         </div>
