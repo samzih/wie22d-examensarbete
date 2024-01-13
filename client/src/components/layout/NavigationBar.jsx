@@ -7,9 +7,17 @@ import { Link } from 'react-router-dom';
 import { BsPerson, BsCart3 } from "react-icons/bs";
 import Stack from 'react-bootstrap/Stack';
 import logo from '../../assets/react.svg';
+import { useCartContext } from '../../context/CartContext';
 
 
 function NavigationBar() {
+    const { cartItems } = useCartContext();
+
+    // Calculates the total quantity of items in cart
+    const totalCartQuantity = cartItems.reduce((accumulator, currentItem) => {
+        return accumulator + currentItem.quantity;
+    }, 0);
+
     return (
         <>
             <Navbar bg='dark' data-bs-theme='dark' sticky='top'>
@@ -37,7 +45,7 @@ function NavigationBar() {
                             </Stack>
                             <div style={{ position: 'relative' }}>
                                 <Badge pill bg='success' style={{ position: 'absolute', top: '-5px', right: '-5px' }}>
-                                    {0}
+                                    {totalCartQuantity >= 1 && totalCartQuantity}
                                 </Badge>
                                 <BsCart3 color='grey' size={37} />
                             </div>

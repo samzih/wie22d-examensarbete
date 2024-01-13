@@ -3,21 +3,15 @@ import { useProductContext } from '../context/ProductContext';
 import { Container, Row, Col, Pagination } from 'react-bootstrap';
 import FeaturedProductCard from '../components/ui/FeaturedProductCard';
 import StandardProductCard from '../components/ui/StandardProductCard';
-import shuffleArray from '../utils/shuffleArray';
 
 
 function Home() {
-    const { products, fetchProducts } = useProductContext();
+    const { products, fetchProducts, featuredProducts } = useProductContext();
     const [currentPage, setCurrentPage] = useState(1);
-    const [featuredProducts, setFeaturedProducts] = useState([]);
 
     useEffect(() => {
         fetchProducts();
     }, []);
-
-    useEffect(() => {
-        setFeaturedProducts(shuffleArray(products).slice(0, 3));
-    }, [products]);
 
     const handlePageChange = (page) => {
 
@@ -41,7 +35,7 @@ function Home() {
                 <Row xxl={3}>
                     {featuredProducts.map((product) => (
                         <Col key={product.id} lg={true}>
-                            <FeaturedProductCard id={product.id} title={product.name} text={product.description} img={product.images[0]} />
+                            <FeaturedProductCard product={product} />
                         </Col>
                     ))}
                 </Row>
@@ -51,7 +45,7 @@ function Home() {
                 <Row xxl={3}>
                     {currentProducts.map((product) => (
                         <Col key={product.id} lg={true}>
-                            <StandardProductCard id={product.id} img={product.images[0]} title={product.name} subtitle={product.description} cpu={product.metadata.processor} gpu={product.metadata.graphics} ram={product.metadata.ram} price={product.default_price.unit_amount} />
+                            <StandardProductCard product={product} />
                         </Col>
                     ))}
                 </Row>
