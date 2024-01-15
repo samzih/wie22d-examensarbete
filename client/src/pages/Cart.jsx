@@ -1,5 +1,5 @@
-import React from 'react'
-import { Container, Row, Col, Button, Table, Stack, Image, ButtonGroup } from 'react-bootstrap'
+import { useState } from 'react'
+import { Container, Row, Col, Button, Table, Stack, Image, ButtonGroup, Spinner } from 'react-bootstrap'
 import { BsArrowLeftShort, BsX, BsFillTrash3Fill } from 'react-icons/bs'
 import { BiSolidLockAlt } from 'react-icons/bi'
 import { useCartContext } from '../context/CartContext'
@@ -7,6 +7,33 @@ import { useCartContext } from '../context/CartContext'
 
 function Cart() {
     const { cartItems, removeFromCart, increaseQuantity, decreaseQuantity, cartTotalPrice, emptyCart } = useCartContext();
+    const [isLoading, setIsLoading] = useState(false);
+
+
+    async function handlePayment() {
+
+        // Stores the cart with product and quantity ready to be sent to stripe
+        const cart = cartItems.map((item) => (
+            { priceID: item.product.default_price.id, quantity: item.quantity }
+        ));
+
+        const response = await fetch('/api/checkout/create-session', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(cart),
+        });
+
+        if (!response.ok) {
+            return
+        }
+
+        const { stripe_checkout_url } = await response.json();
+        window.location = stripe_checkout_url;
+
+    }
+
 
     return (
         <>
@@ -80,16 +107,31 @@ function Cart() {
                     </Col>
                 </Row>
 
-                <Row className='mt-2'>
+                <Row className='mt-2 mb-5'>
                     <Col className='d-flex justify-content-between'>
                         <Button className='icon-link text-decoration-none' variant='link'>
                             <BsArrowLeftShort />
                             Fortsätt handla
                         </Button>
-                        <Button variant='success' size='lg' className='icon-link px-5'>
-                            <BiSolidLockAlt />
-                            Checkout
+
+                        <Button onClick={() => { setIsLoading(true), handlePayment() }} variant='success' size='lg' className='icon-link px-5'>
+                            {isLoading ?
+                                (
+                                    <>
+                                        <Spinner as='span' animation='border' size='sm' role='status' />
+                                        Checkout...
+                                    </>
+                                )
+                                :
+                                (
+                                    <>
+                                        <BiSolidLockAlt />
+                                        Checkout
+                                    </>
+                                )
+                            }
                         </Button>
+
                     </Col>
                 </Row>
 
