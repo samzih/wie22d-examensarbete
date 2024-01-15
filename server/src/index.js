@@ -6,6 +6,7 @@ const cors = require('cors');
 
 // Include routers
 const productRouter = require('./routes/ProductRouter');
+const checkoutRouter = require('./routes/CheckoutRouter');
 
 
 const app = express();
@@ -21,6 +22,8 @@ app.use(express.json());
 
 // Routers
 app.use('/api/products', productRouter);
+
+app.use('/api/checkout', checkoutRouter);
 
 
 app.listen(process.env.PORT || 3000, () => {

@@ -1,6 +1,7 @@
 const { initStripe } = require('../utils/stripe');
 const stripe = initStripe();
 
+
 const getActiveProducts = async (req, res) => {
     try {
 
@@ -20,6 +21,7 @@ const getActiveProducts = async (req, res) => {
     }
 }
 
+
 const getProduct = async (req, res) => {
     try {
 
@@ -36,5 +38,6 @@ const getProduct = async (req, res) => {
 
     }
 }
+
 
 module.exports = { getActiveProducts, getProduct };
