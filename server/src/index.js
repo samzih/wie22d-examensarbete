@@ -1,31 +1,18 @@
-// Include modules
-const express = require('express');
+const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
-const cors = require('cors');
+const { app } = require('./app');
 
 
-// Include routers
-const productRouter = require('./routes/ProductRouter');
-const checkoutRouter = require('./routes/CheckoutRouter');
+main().catch(err => console.log(err));
 
+async function main() {
 
-const app = express();
+    console.log('Connection to MongoDB opened ✔️');
+    mongoose.set('strictQuery', true);
+    await mongoose.connect(process.env.MONGODB_URI, { dbName: 'bytebreeze-db' });
 
+    app.listen(process.env.PORT, () => {
+        console.log(`Server up & running on port ${process.env.PORT}...`);
+    });
 
-// Middlewares
-app.use(cors({
-    origin: process.env.CLIENT_URL,
-}));
-
-app.use(express.json());
-
-
-// Routers
-app.use('/api/products', productRouter);
-
-app.use('/api/checkout', checkoutRouter);
-
-
-app.listen(process.env.PORT || 3000, () => {
-    console.log('Server up & running on port 3000...');
-});
+}
