@@ -9,7 +9,7 @@ import { useUserContext } from '../../context/UserContext'
 
 const NavigationBar = () => {
     const { cartItems } = useCartContext();
-    const { registerUser, show, setShow } = useUserContext();
+    const { show, setShow, registerUser, loginUser } = useUserContext();
     const [overlay, setOverlay] = useState();
 
 
@@ -20,10 +20,16 @@ const NavigationBar = () => {
 
 
     const handleRegister = (e) => {
-        // Prevent the browser from reloading the page
         e.preventDefault();
 
         registerUser(e);
+    }
+
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+
+        loginUser(e);
     }
 
 
@@ -39,7 +45,7 @@ const NavigationBar = () => {
 
 
     const register = (
-        <Popover id='popover-login'>
+        <Popover id='popover-register' className='w-100'>
             <Popover.Header as='h3' className='d-flex justify-content-between align-items-center'>
                 <span className='fw-bold'>Skapa konto</span>
                 <CloseButton onClick={() => setShow(false)} />
@@ -51,11 +57,11 @@ const NavigationBar = () => {
                         <InputGroup>
 
                             <FloatingLabel label='Förnamn' controlId='firstName'>
-                                <Form.Control name='firstName' type='text' placeholder='Förnamn' />
+                                <Form.Control autoComplete='given-name' name='firstName' type='text' placeholder='Förnamn' />
                             </FloatingLabel>
 
                             <FloatingLabel label='Efternamn' controlId='lastName'>
-                                <Form.Control name='lastName' type='text' placeholder='Efternamn' />
+                                <Form.Control autoComplete='family-name' name='lastName' type='text' placeholder='Efternamn' />
                             </FloatingLabel>
 
                         </InputGroup>
@@ -63,17 +69,17 @@ const NavigationBar = () => {
 
                     <Form.Group className='mb-3'>
                         <FloatingLabel label='E-postadress' controlId='email'>
-                            <Form.Control name='email' type="email" placeholder="namn@exempel.se" />
+                            <Form.Control autoComplete='email' name='email' type="email" placeholder="namn@exempel.se" />
                         </FloatingLabel>
                     </Form.Group>
 
                     <Form.Group className='mb-3'>
                         <FloatingLabel label='Lösenord' controlId='password'>
-                            <Form.Control name='password' type='password' placeholder='Lösenord' />
+                            <Form.Control autoComplete='new-password' name='password' type='password' placeholder='Lösenord' />
                         </FloatingLabel>
                     </Form.Group>
 
-                    <p className='small text-center text-muted'>Härmed intygar jag att jag är minst 18 år och godkänner medlemsvillkoren & integritetspolicy.</p>
+                    <p className='small text-center text-muted'>Härmed intygar jag att jag är minst 18 år och godkänner medlemsvillkoren.</p>
 
                     <Button onClick={(e) => handleRegister(e)} type='submit' variant='primary'>Skapa konto</Button>
 
@@ -90,8 +96,37 @@ const NavigationBar = () => {
     );
 
     const login = (
-        <Popover>
-            Login
+        <Popover id='popover-login' className='w-100'>
+            <Popover.Header as='h3' className='d-flex justify-content-between align-items-center'>
+                <span className='fw-bold'>Logga in</span>
+                <CloseButton onClick={() => setShow(false)} />
+            </Popover.Header>
+            <Popover.Body>
+                <Form className='d-grid'>
+
+                    <Form.Group className='mb-3'>
+                        <FloatingLabel label='E-postadress' controlId='email'>
+                            <Form.Control autoComplete='email' name='email' type="email" placeholder="namn@exempel.se" />
+                        </FloatingLabel>
+                    </Form.Group>
+
+                    <Form.Group className='mb-3'>
+                        <FloatingLabel label='Lösenord' controlId='password'>
+                            <Form.Control autoComplete='current-password' name='password' type='password' placeholder='Lösenord' />
+                        </FloatingLabel>
+                    </Form.Group>
+
+                    <Button onClick={(e) => handleLogin(e)} type='submit' variant='primary'>Logga in</Button>
+
+                    <hr />
+
+                    <Stack direction='horizontal' gap={1} className='align-items-center justify-content-center'>
+                        <p className='m-0 fs-6 text-center'>Har du inget konto?</p>
+                        <Button type='button' onClick={() => setOverlay(register)} variant='link' className='fs-6 p-0 border-0 link-underline link-underline-opacity-0 link-underline-opacity-100-hover'>Bli medlem</Button>
+                    </Stack>
+
+                </Form>
+            </Popover.Body>
         </Popover>
     );
 
