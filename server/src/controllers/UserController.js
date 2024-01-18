@@ -40,4 +40,34 @@ const register = async (req, res) => {
 }
 
 
-module.exports = { register };
+const login = async (req, res) => {
+    const { email, password } = req.body;
+
+    // Find user
+    const existingUser = await UserModel.findOne({ email: email }).select('+password');
+
+
+    // Check if no user was found or incorrect password was given
+    if (!existingUser || !(await bcrypt.compare(password, existingUser.password))) {
+        return res.status(401).json('Wrong password or email');
+    }
+
+
+    const user = existingUser.toJSON();
+    user._id = existingUser._id;
+    delete user.password;
+
+
+    // Check if user is logged in
+    if (req.session._id) {
+        return res.status(200).json(user);
+    }
+
+
+    // Save info about the user to the cookie session
+    req.session = user;
+    res.status(200).json(user);
+}
+
+
+module.exports = { register, login };
