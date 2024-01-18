@@ -1,22 +1,100 @@
-import React from 'react'
-import Container from 'react-bootstrap/Container';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Badge from 'react-bootstrap/Badge'
-import { Link } from 'react-router-dom';
-import { BsPerson, BsCart3 } from "react-icons/bs";
-import Stack from 'react-bootstrap/Stack';
-import logo from '../../assets/react.svg';
-import { useCartContext } from '../../context/CartContext';
+import { useState } from 'react'
+import { Container, Navbar, Nav, Badge, Stack, OverlayTrigger, Popover, Button, CloseButton, Form, InputGroup, FloatingLabel } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import { BsPerson, BsCart3 } from "react-icons/bs"
+import logo from '../../assets/react.svg'
+import { useCartContext } from '../../context/CartContext'
+import { useUserContext } from '../../context/UserContext'
 
 
-function NavigationBar() {
+const NavigationBar = () => {
     const { cartItems } = useCartContext();
+    const { registerUser, show, setShow } = useUserContext();
+    const [overlay, setOverlay] = useState();
+
 
     // Calculates the total quantity of items in cart
     const totalCartQuantity = cartItems.reduce((accumulator, currentItem) => {
         return accumulator + currentItem.quantity;
     }, 0);
+
+
+    const handleRegister = (e) => {
+        // Prevent the browser from reloading the page
+        e.preventDefault();
+
+        registerUser(e);
+    }
+
+
+    const handleClick = (value) => {
+        if (show) {
+            setShow(!show);
+            return
+        }
+
+        value == 'login' ? setOverlay(login) : setOverlay(register);
+        setShow(!show);
+    }
+
+
+    const register = (
+        <Popover id='popover-login'>
+            <Popover.Header as='h3' className='d-flex justify-content-between align-items-center'>
+                <span className='fw-bold'>Skapa konto</span>
+                <CloseButton onClick={() => setShow(false)} />
+            </Popover.Header>
+            <Popover.Body>
+                <Form className='d-grid'>
+
+                    <Form.Group className='mb-3'>
+                        <InputGroup>
+
+                            <FloatingLabel label='Förnamn' controlId='firstName'>
+                                <Form.Control name='firstName' type='text' placeholder='Förnamn' />
+                            </FloatingLabel>
+
+                            <FloatingLabel label='Efternamn' controlId='lastName'>
+                                <Form.Control name='lastName' type='text' placeholder='Efternamn' />
+                            </FloatingLabel>
+
+                        </InputGroup>
+                    </Form.Group>
+
+                    <Form.Group className='mb-3'>
+                        <FloatingLabel label='E-postadress' controlId='email'>
+                            <Form.Control name='email' type="email" placeholder="namn@exempel.se" />
+                        </FloatingLabel>
+                    </Form.Group>
+
+                    <Form.Group className='mb-3'>
+                        <FloatingLabel label='Lösenord' controlId='password'>
+                            <Form.Control name='password' type='password' placeholder='Lösenord' />
+                        </FloatingLabel>
+                    </Form.Group>
+
+                    <p className='small text-center text-muted'>Härmed intygar jag att jag är minst 18 år och godkänner medlemsvillkoren & integritetspolicy.</p>
+
+                    <Button onClick={(e) => handleRegister(e)} type='submit' variant='primary'>Skapa konto</Button>
+
+                    <hr />
+
+                    <Stack direction='horizontal' gap={1} className='align-items-center justify-content-center'>
+                        <p className='m-0 fs-6 text-center'>Redan medlem?</p>
+                        <Button type='button' onClick={() => setOverlay(login)} variant='link' className='fs-6 p-0 border-0 link-underline link-underline-opacity-0 link-underline-opacity-100-hover'>Logga in</Button>
+                    </Stack>
+
+                </Form>
+            </Popover.Body>
+        </Popover>
+    );
+
+    const login = (
+        <Popover>
+            Login
+        </Popover>
+    );
+
 
     return (
         <>
@@ -36,13 +114,19 @@ function NavigationBar() {
                     <Nav>
 
                         <Stack className='align-items-center' direction='horizontal' gap={5}>
-                            <Stack direction='horizontal' className='align-items-center' gap={2}>
-                                <BsPerson color='white' size={45} />
-                                <div>
-                                    <p className='text-light m-0 fw-semibold'>Logga in</p>
-                                    <p className='text-light m-0'>Skapa konto</p>
-                                </div>
-                            </Stack>
+
+                            <OverlayTrigger show={show} trigger='click' placement='bottom-end' overlay={overlay}>
+
+                                <Stack direction='horizontal' className='align-items-center' gap={2}>
+                                    <BsPerson onClick={() => handleClick('login')} color='white' size={45} />
+                                    <Stack className='align-items-start'>
+                                        <Button onClick={() => handleClick('login')} variant='link' className='p-0 border-0 fw-medium link-light link-underline link-underline-opacity-0 link-underline-opacity-100-hover'>Logga in</Button>
+                                        <Button onClick={() => handleClick('register')} variant='link' className='p-0 border-0 link-light link-underline link-underline-opacity-0 link-underline-opacity-100-hover'>Skapa konto</Button>
+                                    </Stack>
+                                </Stack>
+
+                            </OverlayTrigger>
+
                             <div style={{ position: 'relative' }}>
                                 <Badge pill bg='success' style={{ position: 'absolute', top: '-5px', right: '-5px' }}>
                                     {totalCartQuantity >= 1 && totalCartQuantity}

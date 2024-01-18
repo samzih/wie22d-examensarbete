@@ -5,26 +5,24 @@ const { UserModel } = require('../models/UserModel');
 
 
 const register = async (req, res) => {
-
-    const { username, email } = req.body;
+    const { firstName, lastName, email } = req.body;
 
     // Check if user already exists (conflict)
-    const existingUser = await UserModel.findOne({ username: username });
+    const existingUser = await UserModel.findOne({ email: email });
     if (existingUser) {
-        return res.status(409).json('Username is already taken');
+        return res.status(409).json('Email is already in use');
     }
 
 
     // Create a customer on Stripe
     const customer = await stripe.customers.create({
-        name: username,
+        name: `${firstName} ${lastName}`,
         email: email,
     });
 
 
     // Only if customer creation goes well on Stripe, create user in DB
     if (customer) {
-
         // Create user
         const user = new UserModel(req.body);
         user.stripeCustomerId = customer.id;
@@ -38,9 +36,7 @@ const register = async (req, res) => {
         delete User.password;
 
         res.status(201).json(User);
-
     }
-
 }
 
 
