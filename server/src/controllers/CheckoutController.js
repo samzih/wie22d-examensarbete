@@ -12,6 +12,7 @@ const initStripeSession = async (req, res) => {
                     quantity: item.quantity
                 }
             )),
+            customer: req.session.stripeCustomerId,
             mode: 'payment',
             locale: 'sv',
             allow_promotion_codes: true,
