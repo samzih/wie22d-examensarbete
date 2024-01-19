@@ -1,7 +1,9 @@
 import { useState } from 'react'
-import { Container, Navbar, Nav, Badge, Stack, OverlayTrigger, Popover, Button, CloseButton, Form, InputGroup, FloatingLabel } from 'react-bootstrap'
+import { Container, Navbar, Nav, Badge, Stack, Image, OverlayTrigger, Popover, Button, CloseButton, Form, InputGroup, FloatingLabel, Dropdown } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { BsPerson, BsCart3 } from "react-icons/bs"
+import { BsPerson, BsCart3, BsPersonFill, BsListUl } from 'react-icons/bs'
+import { LuSettings2 } from 'react-icons/lu'
+import { RxExit } from 'react-icons/rx'
 import logo from '../../assets/react.svg'
 import { useCartContext } from '../../context/CartContext'
 import { useUserContext } from '../../context/UserContext'
@@ -9,7 +11,7 @@ import { useUserContext } from '../../context/UserContext'
 
 const NavigationBar = () => {
     const { cartItems } = useCartContext();
-    const { show, setShow, registerUser, loginUser } = useUserContext();
+    const { show, setShow, registerUser, loginUser, user, logoutUser } = useUserContext();
     const [overlay, setOverlay] = useState();
 
 
@@ -138,10 +140,10 @@ const NavigationBar = () => {
 
                     <Navbar.Brand as={Link} to='/'>
                         <img
-                            alt="logo"
+                            alt='logo'
                             src={logo}
-                            height="40"
-                            className="d-inline-block align-center"
+                            height='40'
+                            className='d-inline-block align-center'
                         />{' '}
                         ByteBreeze
                     </Navbar.Brand>
@@ -150,17 +152,70 @@ const NavigationBar = () => {
 
                         <Stack className='align-items-center' direction='horizontal' gap={5}>
 
-                            <OverlayTrigger show={show} trigger='click' placement='bottom-end' overlay={overlay}>
+                            {user ?
+                                (
+                                    <Stack direction='horizontal' className='align-items-center justify-content-center' gap={2}>
+                                        <Image style={{ objectFit: 'cover' }} width={40} height={40} src='' roundedCircle />
+                                        <Stack direction='horizontal' gap={1} className='align-items-center'>
 
-                                <Stack direction='horizontal' className='align-items-center' gap={2}>
-                                    <BsPerson onClick={() => handleClick('login')} color='white' size={45} />
-                                    <Stack className='align-items-start'>
-                                        <Button onClick={() => handleClick('login')} variant='link' className='p-0 border-0 fw-medium link-light link-underline link-underline-opacity-0 link-underline-opacity-100-hover'>Logga in</Button>
-                                        <Button onClick={() => handleClick('register')} variant='link' className='p-0 border-0 link-light link-underline link-underline-opacity-0 link-underline-opacity-100-hover'>Skapa konto</Button>
+                                            <Dropdown>
+                                                <Dropdown.Toggle className='text-light text-decoration-none' variant='link'>
+                                                    {`${user.firstName} ${user.lastName}`}
+                                                </Dropdown.Toggle>
+
+                                                <Dropdown.Menu>
+                                                    <Dropdown.Item as={Link} >
+                                                        <Stack direction='horizontal' gap={2}>
+                                                            <BsPersonFill size={20} />
+                                                            Profil
+                                                        </Stack>
+                                                    </Dropdown.Item>
+
+                                                    <Dropdown.Item as={Link}>
+                                                        <Stack direction='horizontal' gap={2}>
+                                                            <BsListUl size={20} />
+                                                            Beställningar
+                                                        </Stack>
+                                                    </Dropdown.Item>
+
+                                                    {user.isAdmin &&
+                                                        <Dropdown.Item as={Link}>
+                                                            <Stack direction='horizontal' gap={2}>
+                                                                <LuSettings2 size={20} />
+                                                                Admin panel
+                                                            </Stack>
+                                                        </Dropdown.Item>
+                                                    }
+
+                                                    <Dropdown.Divider />
+
+                                                    <Dropdown.Item onClick={logoutUser} as={Button}>
+                                                        <Stack direction='horizontal' gap={2}>
+                                                            <RxExit size={20} />
+                                                            Logga ut
+                                                        </Stack>
+                                                    </Dropdown.Item>
+                                                </Dropdown.Menu>
+                                            </Dropdown>
+
+                                        </Stack>
                                     </Stack>
-                                </Stack>
+                                )
+                                :
+                                (
+                                    <OverlayTrigger show={show} trigger='click' placement='bottom-end' overlay={overlay}>
 
-                            </OverlayTrigger>
+                                        <Stack direction='horizontal' className='align-items-center' gap={2}>
+                                            <BsPerson onClick={() => handleClick('login')} color='white' size={45} />
+                                            <Stack className='align-items-start'>
+                                                <Button onClick={() => handleClick('login')} variant='link' className='p-0 border-0 fw-medium link-light link-underline link-underline-opacity-0 link-underline-opacity-100-hover'>Logga in</Button>
+                                                <Button onClick={() => handleClick('register')} variant='link' className='p-0 border-0 link-light link-underline link-underline-opacity-0 link-underline-opacity-100-hover'>Skapa konto</Button>
+                                            </Stack>
+                                        </Stack>
+
+                                    </OverlayTrigger>
+                                )
+                            }
 
                             <div style={{ position: 'relative' }}>
                                 <Badge pill bg='success' style={{ position: 'absolute', top: '-5px', right: '-5px' }}>
