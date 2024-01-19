@@ -1,12 +1,15 @@
 import { useState } from 'react'
-import { Container, Row, Col, Button, Table, Stack, Image, ButtonGroup, Spinner } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import { Container, Row, Col, Button, Table, Stack, Image, ButtonGroup, Spinner, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { BsArrowLeftShort, BsX, BsFillTrash3Fill } from 'react-icons/bs'
 import { BiSolidLockAlt } from 'react-icons/bi'
 import { useCartContext } from '../context/CartContext'
+import { useUserContext } from '../context/UserContext'
 
 
 function Cart() {
     const { cartItems, removeFromCart, increaseQuantity, decreaseQuantity, cartTotalPrice, emptyCart } = useCartContext();
+    const { user } = useUserContext();
     const [isLoading, setIsLoading] = useState(false);
 
 
@@ -33,6 +36,21 @@ function Cart() {
         window.location = stripe_checkout_url;
 
     }
+
+
+    const checkoutTooltip = (props) => (
+        <Tooltip {...props}>
+            {cartItems.length < 1 ?
+                (
+                    <span>Kundvagnen är tom</span>
+                )
+                :
+                (
+                    <span>Du måste vara inloggad för att kunna checka ut</span>
+                )
+            }
+        </Tooltip>
+    );
 
 
     return (
@@ -109,28 +127,42 @@ function Cart() {
 
                 <Row className='mt-2 mb-5'>
                     <Col className='d-flex justify-content-between'>
-                        <Button className='icon-link text-decoration-none' variant='link'>
+                        <Button as={Link} to='/' className='icon-link text-decoration-none' variant='link'>
                             <BsArrowLeftShort />
                             Fortsätt handla
                         </Button>
-
-                        <Button onClick={() => { setIsLoading(true), handlePayment() }} variant='success' size='lg' className='icon-link px-5'>
-                            {isLoading ?
-                                (
-                                    <>
-                                        <Spinner as='span' animation='border' size='sm' role='status' />
-                                        Checkout...
-                                    </>
-                                )
-                                :
-                                (
-                                    <>
-                                        <BiSolidLockAlt />
-                                        Checkout
-                                    </>
-                                )
-                            }
-                        </Button>
+                        {cartItems.length >= 1 && user ?
+                            (
+                                <Button onClick={() => { setIsLoading(true), handlePayment() }} variant='success' size='lg' className='icon-link px-5' disabled={isLoading}>
+                                    {isLoading ?
+                                        (
+                                            <>
+                                                <Spinner as='span' animation='border' size='sm' role='status' />
+                                                Checkout
+                                            </>
+                                        )
+                                        :
+                                        (
+                                            <>
+                                                <BiSolidLockAlt />
+                                                Checkout
+                                            </>
+                                        )
+                                    }
+                                </Button>
+                            )
+                            :
+                            (
+                                <OverlayTrigger placement='bottom' delay={{ show: 100, hide: 250 }} overlay={checkoutTooltip}>
+                                    <div>
+                                        <Button disabled variant='success' size='lg' className='icon-link px-5'>
+                                            <BiSolidLockAlt />
+                                            Checkout
+                                        </Button>
+                                    </div>
+                                </OverlayTrigger>
+                            )
+                        }
 
                     </Col>
                 </Row>
