@@ -70,4 +70,15 @@ const login = async (req, res) => {
 }
 
 
-module.exports = { register, login };
+const logout = async (req, res) => {
+    // Check if user is not logged in
+    if (!req.session._id) {
+        return res.status(400).json('You can\'t logout if you\'re not logged in');
+    }
+
+    // Clears the session
+    req.session = null
+    res.status(204).json(null);
+}
+
+module.exports = { register, login, logout };

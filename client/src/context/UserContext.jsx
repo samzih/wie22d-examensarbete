@@ -1,11 +1,14 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
+
 const UserContext = createContext({
     show: false,
     setShow: () => { },
     registerUser: () => { },
     loginUser: () => { },
+    user: {},
+    logoutUser: () => { },
 });
 
 
@@ -71,9 +74,23 @@ const UserProvider = ({ children }) => {
     }
 
 
+    const logoutUser = async () => {
+        const response = await fetch('/api/users/logout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.ok) {
+            setUser(null);
+        }
+    }
+
+
     return (
         <div>
-            <UserContext.Provider value={{ show, setShow, registerUser, loginUser }}>
+            <UserContext.Provider value={{ show, setShow, registerUser, loginUser, user, logoutUser }}>
                 {children}
             </UserContext.Provider>
         </div>
