@@ -217,12 +217,12 @@ const NavigationBar = () => {
                                 )
                             }
 
-                            <div style={{ position: 'relative' }}>
+                            <Link to='/cart' style={{ position: 'relative' }}>
                                 <Badge pill bg='success' style={{ position: 'absolute', top: '-5px', right: '-5px' }}>
                                     {totalCartQuantity >= 1 && totalCartQuantity}
                                 </Badge>
                                 <BsCart3 color='grey' size={37} />
-                            </div>
+                            </Link>
 
                         </Stack>
 
