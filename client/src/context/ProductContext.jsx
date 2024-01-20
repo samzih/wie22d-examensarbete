@@ -19,6 +19,7 @@ const ProductProvider = ({ children }) => {
     const [products, setProducts] = useState([]);
     const [featuredProducts, setFeaturedProducts] = useState([]);
     const [product, setProduct] = useState({});
+    const [hasEffectRun, setHasEffectRun] = useState(false);
 
 
     // Fetch all products
@@ -31,8 +32,12 @@ const ProductProvider = ({ children }) => {
 
 
     useEffect(() => {
-        setFeaturedProducts(shuffle(products).slice(0, 3));
-    }, [products])
+        if (products.length && !hasEffectRun) {
+            setFeaturedProducts(shuffle(products).slice(0, 3));
+
+            setHasEffectRun(true);
+        }
+    }, [products]);
 
 
     // Fetch individual product

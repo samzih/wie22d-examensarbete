@@ -8,8 +8,8 @@ function FeaturedProductCard({ product }) {
     const { id, name, description, images } = product;
 
     return (
-        <Card className='text-center border-0 rounded-3 bg-success bg-gradient bg-opacity-25 h-100'>
-            <Card.Body>
+        <Card className='border-0 rounded-3 bg-success bg-gradient bg-opacity-25 h-100'>
+            <Card.Body className='d-flex flex-column align-items-center text-center justify-content-between'>
                 <Card.Title className='display-6'>{name}</Card.Title>
                 <Card.Text className='mx-4'>{description}</Card.Text>
                 <Link to={`/product/${id}`}>

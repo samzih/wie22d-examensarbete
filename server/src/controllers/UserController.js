@@ -25,7 +25,7 @@ const register = async (req, res) => {
     if (customer) {
         // Create user
         const user = new UserModel(req.body);
-        user.stripeCustomerId = customer.id;
+        user.stripeCustomerID = customer.id;
         user.password = await bcrypt.hash(user.password, 10);
         await user.save();
 
