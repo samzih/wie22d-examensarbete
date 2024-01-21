@@ -3,6 +3,7 @@ import { useProductContext } from '../context/ProductContext';
 import { Container, Row, Col, Pagination } from 'react-bootstrap';
 import FeaturedProductCard from '../components/ui/FeaturedProductCard';
 import StandardProductCard from '../components/ui/StandardProductCard';
+import SalesPitch from '../components/ui/SalesPitch';
 
 
 function Home() {
@@ -39,6 +40,10 @@ function Home() {
                         </Col>
                     ))}
                 </Row>
+            </Container>
+
+            <Container fluid='md' className='mt-5'>
+                <SalesPitch />
             </Container>
 
             <Container fluid='md' className='mt-5'>
