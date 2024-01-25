@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useProductContext } from '../context/ProductContext';
-import { Container, Row, Col, Pagination } from 'react-bootstrap';
-import FeaturedProductCard from '../components/ui/FeaturedProductCard';
-import StandardProductCard from '../components/ui/StandardProductCard';
-import SalesPitch from '../components/ui/SalesPitch';
+import { useEffect, useState } from 'react'
+import { useProductContext } from '../context/ProductContext'
+import { Container, Row, Col, Pagination, Image } from 'react-bootstrap'
+import FeaturedProductCard from '../components/ui/FeaturedProductCard'
+import StandardProductCard from '../components/ui/StandardProductCard'
+import SalesPitch from '../components/ui/SalesPitch'
 
 
 function Home() {
@@ -24,7 +24,7 @@ function Home() {
     }
 
     // Calculate the indexes of the current page
-    const productsPerPage = 3;
+    const productsPerPage = 6;
     const indexOfLastProduct = currentPage * productsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
     const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
@@ -32,7 +32,16 @@ function Home() {
 
     return (
         <>
-            <Container fluid='md' className='mt-5'>
+
+            <div>
+                <Image src='/pc-hero-bg.jpg' fluid />
+            </div>
+
+            <Container className='mt-5'>
+                <h1 className='display-6 fw-bold text-center mb-4'>Slumpmässigt rekommenderade</h1>
+            </Container>
+
+            <Container fluid='md'>
                 <Row xxl={3}>
                     {featuredProducts.map((product) => (
                         <Col key={product.id} lg={true}>
@@ -47,9 +56,10 @@ function Home() {
             </Container>
 
             <Container fluid='md' className='mt-5'>
+                <h1 className='display-6 fw-bold text-center mb-3'>Hela vårt sortiment</h1>
                 <Row xxl={3}>
                     {currentProducts.map((product) => (
-                        <Col key={product.id} lg={true}>
+                        <Col key={product.id} lg={true} className='mb-5'>
                             <StandardProductCard product={product} />
                         </Col>
                     ))}

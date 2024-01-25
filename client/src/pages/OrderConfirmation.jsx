@@ -8,7 +8,7 @@ import { BsBagCheck } from 'react-icons/bs'
 function OrderConfirmation() {
     const { emptyCart } = useCartContext();
     const [queryParameters] = useSearchParams();
-    const [orderDetails, setOrderDetails] = useState({});
+    const [orderDetails, setOrderDetails] = useState();
 
 
     const verifyOrder = async () => {
@@ -80,7 +80,7 @@ function OrderConfirmation() {
                 :
                 (
                     <Container>
-                        No session found
+                        No order found
                     </Container>
                 )
             }

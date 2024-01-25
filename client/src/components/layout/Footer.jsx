@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Container, Row, Col, Image } from 'react-bootstrap'
-import logo from '../../assets/react.svg'
+import logo from '../../assets/bb-logo-blue.png'
 import { BsTwitterX, BsInstagram, BsVimeo } from 'react-icons/bs'
 
 function Footer() {

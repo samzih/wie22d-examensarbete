@@ -22,12 +22,16 @@ const ProductProvider = ({ children }) => {
     const [hasEffectRun, setHasEffectRun] = useState(false);
 
 
-    // Fetch all products
+    // GET all products from Stripe
     async function fetchProducts() {
-        const response = await fetch('/api/products');
-        const data = await response.json();
+        try {
+            const response = await fetch('/api/products');
+            const data = await response.json();
 
-        setProducts(data.data);
+            setProducts(data.data);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
 
@@ -40,13 +44,16 @@ const ProductProvider = ({ children }) => {
     }, [products]);
 
 
-    // Fetch individual product
+    // GET one individual product from Stripe
     async function fetchProduct(id) {
-        const response = await fetch(`/api/products/${id}`);
-        const data = await response.json();
+        try {
+            const response = await fetch(`/api/products/${id}`);
+            const data = await response.json();
 
-        setProduct(data);
-        console.log(data);
+            setProduct(data);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
 
