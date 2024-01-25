@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { BsPerson, BsCart3, BsPersonFill, BsListUl } from 'react-icons/bs'
 import { LuSettings2 } from 'react-icons/lu'
 import { RxExit } from 'react-icons/rx'
-import logo from '../../assets/react.svg'
+import logo from '../../assets/bb-logo-blue.png'
 import { useCartContext } from '../../context/CartContext'
 import { useUserContext } from '../../context/UserContext'
 
@@ -138,7 +138,7 @@ const NavigationBar = () => {
             <Navbar bg='dark' data-bs-theme='dark' sticky='top'>
                 <Container>
 
-                    <Navbar.Brand as={Link} to='/'>
+                    <Navbar.Brand as={Link} to='/' className='d-flex align-items-center gap-2'>
                         <img
                             alt='logo'
                             src={logo}

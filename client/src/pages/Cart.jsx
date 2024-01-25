@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Container, Row, Col, Button, Table, Stack, Image, ButtonGroup, Spinner, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Container, Row, Col, Button, Table, Stack, Image, ButtonGroup, Spinner, OverlayTrigger, Tooltip, CloseButton } from 'react-bootstrap'
 import { BsArrowLeftShort, BsX, BsFillTrash3Fill } from 'react-icons/bs'
 import { BiSolidLockAlt } from 'react-icons/bi'
 import { useCartContext } from '../context/CartContext'
@@ -98,7 +98,8 @@ function Cart() {
                                         </td>
                                         <td className='m-0 p-0 text-end align-middle'>{`${item.product.default_price.unit_amount * item.quantity / 100} kr`}</td>
                                         <td className='m-0 p-0 text-end align-middle'>
-                                            <BsX onClick={() => removeFromCart(item.product.id)} size={40} color='red' />
+                                            {/* <BsX onClick={() => removeFromCart(item.product.id)} size={40} color='red' /> */}
+                                            <CloseButton onClick={() => removeFromCart(item.product.id)} />
                                         </td>
                                     </tr>
                                 ))}

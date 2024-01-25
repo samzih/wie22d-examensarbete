@@ -15,7 +15,7 @@ function StandardProductCard({ product }) {
 
 
     return (
-        <Card className='text-start border-0'>
+        <Card className='text-start border-0 h-100'>
 
             <div className='rounded-0 p-5 bg-light'>
                 <Link to={`/product/${id}`}>
@@ -23,7 +23,7 @@ function StandardProductCard({ product }) {
                 </Link>
             </div>
 
-            <ListGroup variant='flush'>
+            <ListGroup variant='flush' className='h-100 justify-content-between   '>
 
                 <ListGroup.Item className='px-0'>
                     <Card.Title className='fw-bold'>{name}</Card.Title>
