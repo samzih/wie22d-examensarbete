@@ -5,6 +5,7 @@ import ProductDetail from './pages/ProductDetail'
 import Cart from './pages/Cart'
 import OrderConfirmation from './pages/OrderConfirmation'
 import NavigationBar from './components/layout/NavigationBar'
+import RegistrationNotification from './components/ui/RegistrationNotification'
 import ProductProvider from './context/ProductContext'
 import CartProvider from './context/CartContext'
 import UserProvider from './context/UserContext'
@@ -20,6 +21,7 @@ function App() {
 
             <div className='stickyFooter'>
               <NavigationBar />
+              <RegistrationNotification />
               <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/product/:id' element={<ProductDetail />} />

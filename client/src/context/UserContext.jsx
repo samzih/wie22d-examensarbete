@@ -9,6 +9,8 @@ const UserContext = createContext({
     loginUser: () => { },
     user: {},
     logoutUser: () => { },
+    showNotif: false,
+    setShowNotif: () => { },
 });
 
 
@@ -18,6 +20,7 @@ export const useUserContext = () => useContext(UserContext);
 const UserProvider = ({ children }) => {
     const [show, setShow] = useState(false);
     const [user, setUser] = useLocalStorage('user', null);
+    const [showNotif, setShowNotif] = useState(false);
 
 
     const closePopover = () => setShow(false);
@@ -41,6 +44,7 @@ const UserProvider = ({ children }) => {
 
         if (response.ok) {
             closePopover();
+            setShowNotif(true);
         }
 
         if (response.status === 409) {
@@ -90,7 +94,7 @@ const UserProvider = ({ children }) => {
 
     return (
         <div>
-            <UserContext.Provider value={{ show, setShow, registerUser, loginUser, user, logoutUser }}>
+            <UserContext.Provider value={{ show, setShow, registerUser, loginUser, user, logoutUser, showNotif, setShowNotif }}>
                 {children}
             </UserContext.Provider>
         </div>
