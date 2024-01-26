@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Container, Navbar, Nav, Badge, Stack, Image, OverlayTrigger, Popover, Button, CloseButton, Form, InputGroup, FloatingLabel, Dropdown } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { BsPerson, BsCart3, BsPersonFill, BsListUl } from 'react-icons/bs'
@@ -13,6 +13,8 @@ const NavigationBar = () => {
     const { cartItems } = useCartContext();
     const { show, setShow, registerUser, loginUser, user, logoutUser } = useUserContext();
     const [overlay, setOverlay] = useState();
+    const [registerValidated, setRegisterValidated] = useState(false);
+    const [loginValidated, setLoginValidated] = useState(false);
 
 
     // Calculates the total quantity of items in cart
@@ -21,17 +23,39 @@ const NavigationBar = () => {
     }, 0);
 
 
+    useEffect(() => {
+        registerValidated && setOverlay(register);
+    }, [registerValidated]);
+
+
+    useEffect(() => {
+        loginValidated && setOverlay(login);
+    }, [loginValidated]);
+
+
     const handleRegister = (e) => {
         e.preventDefault();
 
-        registerUser(e);
+        // If validation passes then try to register user, otherwise validate form
+        if (e.currentTarget.checkValidity()) {
+            registerUser(e);
+            setRegisterValidated(false);
+        } else {
+            setRegisterValidated(true);
+        }
     }
 
 
     const handleLogin = (e) => {
         e.preventDefault();
 
-        loginUser(e);
+        // If validation passes then try to register user, otherwise validate form
+        if (e.currentTarget.checkValidity()) {
+            loginUser(e);
+            setLoginValidated(false);
+        } else {
+            setLoginValidated(true);
+        }
     }
 
 
@@ -42,7 +66,14 @@ const NavigationBar = () => {
         }
 
         value == 'login' ? setOverlay(login) : setOverlay(register);
-        setShow(!show);
+        setShow(true);
+    }
+
+
+    const handleClose = () => {
+        setShow(false);
+        setLoginValidated(false);
+        setRegisterValidated(false);
     }
 
 
@@ -50,20 +81,20 @@ const NavigationBar = () => {
         <Popover id='popover-register' className='w-100'>
             <Popover.Header as='h3' className='d-flex justify-content-between align-items-center'>
                 <span className='fw-bold'>Skapa konto</span>
-                <CloseButton onClick={() => setShow(false)} />
+                <CloseButton onClick={handleClose} />
             </Popover.Header>
             <Popover.Body>
-                <Form className='d-grid'>
+                <Form className='d-grid' validated={registerValidated} noValidate onSubmit={(e) => handleRegister(e)}>
 
                     <Form.Group className='mb-3'>
                         <InputGroup>
 
                             <FloatingLabel label='Förnamn' controlId='firstName'>
-                                <Form.Control autoComplete='given-name' name='firstName' type='text' placeholder='Förnamn' />
+                                <Form.Control required autoComplete='given-name' name='firstName' type='text' placeholder='Förnamn' />
                             </FloatingLabel>
 
                             <FloatingLabel label='Efternamn' controlId='lastName'>
-                                <Form.Control autoComplete='family-name' name='lastName' type='text' placeholder='Efternamn' />
+                                <Form.Control required autoComplete='family-name' name='lastName' type='text' placeholder='Efternamn' />
                             </FloatingLabel>
 
                         </InputGroup>
@@ -71,19 +102,20 @@ const NavigationBar = () => {
 
                     <Form.Group className='mb-3'>
                         <FloatingLabel label='E-postadress' controlId='email'>
-                            <Form.Control autoComplete='email' name='email' type="email" placeholder="namn@exempel.se" />
+                            <Form.Control required autoComplete='email' name='email' type="email" placeholder="namn@exempel.se" />
                         </FloatingLabel>
                     </Form.Group>
 
                     <Form.Group className='mb-3'>
                         <FloatingLabel label='Lösenord' controlId='password'>
-                            <Form.Control autoComplete='new-password' name='password' type='password' placeholder='Lösenord' />
+                            <Form.Control required minLength={6} autoComplete='new-password' name='password' type='password' placeholder='Lösenord' />
+                            <Form.Control.Feedback type='invalid'>Ditt lösenord måste vara minst 6 tecken</Form.Control.Feedback>
                         </FloatingLabel>
                     </Form.Group>
 
                     <p className='small text-center text-muted'>Härmed intygar jag att jag är minst 18 år och godkänner medlemsvillkoren.</p>
 
-                    <Button onClick={(e) => handleRegister(e)} type='submit' variant='primary'>Skapa konto</Button>
+                    <Button type='submit' variant='primary'>Skapa konto</Button>
 
                     <hr />
 
@@ -101,24 +133,24 @@ const NavigationBar = () => {
         <Popover id='popover-login' className='w-100'>
             <Popover.Header as='h3' className='d-flex justify-content-between align-items-center'>
                 <span className='fw-bold'>Logga in</span>
-                <CloseButton onClick={() => setShow(false)} />
+                <CloseButton onClick={handleClose} />
             </Popover.Header>
             <Popover.Body>
-                <Form className='d-grid'>
+                <Form className='d-grid' validated={loginValidated} noValidate onSubmit={(e) => handleLogin(e)}>
 
                     <Form.Group className='mb-3'>
                         <FloatingLabel label='E-postadress' controlId='email'>
-                            <Form.Control autoComplete='email' name='email' type="email" placeholder="namn@exempel.se" />
+                            <Form.Control required autoComplete='email' name='email' type="email" placeholder="namn@exempel.se" />
                         </FloatingLabel>
                     </Form.Group>
 
                     <Form.Group className='mb-3'>
                         <FloatingLabel label='Lösenord' controlId='password'>
-                            <Form.Control autoComplete='current-password' name='password' type='password' placeholder='Lösenord' />
+                            <Form.Control required autoComplete='current-password' name='password' type='password' placeholder='Lösenord' />
                         </FloatingLabel>
                     </Form.Group>
 
-                    <Button onClick={(e) => handleLogin(e)} type='submit' variant='primary'>Logga in</Button>
+                    <Button type='submit' variant='primary'>Logga in</Button>
 
                     <hr />
 
@@ -206,10 +238,10 @@ const NavigationBar = () => {
                                     <OverlayTrigger show={show} trigger='click' placement='bottom-end' overlay={overlay}>
 
                                         <Stack direction='horizontal' className='align-items-center' gap={2}>
-                                            <BsPerson onClick={() => handleClick('login')} color='white' size={45} />
+                                            <BsPerson onClick={() => { handleClose(); handleClick('login'); }} color='white' size={45} />
                                             <Stack className='align-items-start'>
-                                                <Button onClick={() => handleClick('login')} variant='link' className='p-0 border-0 fw-medium link-light link-underline link-underline-opacity-0 link-underline-opacity-100-hover'>Logga in</Button>
-                                                <Button onClick={() => handleClick('register')} variant='link' className='p-0 border-0 link-light link-underline link-underline-opacity-0 link-underline-opacity-100-hover'>Skapa konto</Button>
+                                                <Button onClick={() => { handleClose(); handleClick('login'); }} variant='link' className='p-0 border-0 fw-medium link-light link-underline link-underline-opacity-0 link-underline-opacity-100-hover'>Logga in</Button>
+                                                <Button onClick={() => { handleClose(); handleClick('register'); }} variant='link' className='p-0 border-0 link-light link-underline link-underline-opacity-0 link-underline-opacity-100-hover'>Skapa konto</Button>
                                             </Stack>
                                         </Stack>
 
