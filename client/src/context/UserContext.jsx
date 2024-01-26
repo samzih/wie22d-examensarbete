@@ -28,7 +28,7 @@ const UserProvider = ({ children }) => {
 
     const registerUser = async (e) => {
         // Read the form data
-        const form = e.target.form;
+        const form = e.target;
         const formData = new FormData(form);
 
         // Make it an object
@@ -56,7 +56,7 @@ const UserProvider = ({ children }) => {
 
     const loginUser = async (e) => {
         // Read the form data
-        const form = e.target.form;
+        const form = e.target;
         const formData = new FormData(form);
 
         // Make it an object
