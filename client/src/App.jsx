@@ -11,6 +11,10 @@ import CartProvider from './context/CartContext'
 import UserProvider from './context/UserContext'
 import Footer from './components/layout/Footer'
 import './App.css'
+import User from './pages/User'
+import UserProfile from './pages/UserProfile'
+import UserOrders from './pages/UserOrders'
+
 
 function App() {
   return (
@@ -27,8 +31,12 @@ function App() {
                 <Route path='/product/:id' element={<ProductDetail />} />
                 <Route path='/cart' element={<Cart />} />
                 <Route path='/success' element={<OrderConfirmation />} />
+                <Route path='/user' element={<User />}>
+                  <Route path='profile' element={<UserProfile />} />
+                  <Route path='orders' element={<UserOrders />} />
+                </Route>
               </Routes>
-              <Footer />
+              {/* <Footer /> */}
             </div>
 
           </CartProvider>
