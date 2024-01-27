@@ -5,6 +5,7 @@ import { BsArrowLeftShort, BsX, BsFillTrash3Fill } from 'react-icons/bs'
 import { BiSolidLockAlt } from 'react-icons/bi'
 import { useCartContext } from '../context/CartContext'
 import { useUserContext } from '../context/UserContext'
+import NavigationBar from '../components/layout/NavigationBar'
 
 
 function Cart() {
@@ -55,6 +56,7 @@ function Cart() {
 
     return (
         <>
+            <NavigationBar />
             <Container>
                 <Row className='my-5 text-center'>
                     <Col>

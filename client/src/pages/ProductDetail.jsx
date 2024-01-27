@@ -4,6 +4,8 @@ import { useProductContext } from '../context/ProductContext'
 import { useCartContext } from '../context/CartContext'
 
 import { Image, Container, Figure, Col, Row, Stack, Button, Breadcrumb } from 'react-bootstrap'
+import NavigationBar from '../components/layout/NavigationBar'
+import Footer from '../components/layout/Footer'
 
 
 function ProductDetail() {
@@ -19,6 +21,7 @@ function ProductDetail() {
 
     return (
         <>
+            <NavigationBar />
             {product.id === id &&
                 <Container className='my-5'>
                     <Row>
@@ -72,6 +75,7 @@ function ProductDetail() {
                     </Row>
                 </Container>
             }
+            <Footer />
         </>
     )
 }

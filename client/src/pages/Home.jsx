@@ -4,6 +4,8 @@ import { Container, Row, Col, Pagination, Image } from 'react-bootstrap'
 import FeaturedProductCard from '../components/ui/FeaturedProductCard'
 import StandardProductCard from '../components/ui/StandardProductCard'
 import SalesPitch from '../components/ui/SalesPitch'
+import NavigationBar from '../components/layout/NavigationBar'
+import Footer from '../components/layout/Footer'
 
 
 function Home() {
@@ -32,6 +34,7 @@ function Home() {
 
     return (
         <>
+            <NavigationBar />
 
             <div>
                 <Image src='/pc-hero-bg.jpg' fluid />
@@ -76,6 +79,8 @@ function Home() {
                 </Pagination>
 
             </Container>
+
+            <Footer />
         </>
     )
 }
