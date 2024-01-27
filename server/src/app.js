@@ -7,6 +7,7 @@ const cookieSession = require('cookie-session');
 const productRouter = require('./routes/ProductRouter');
 const checkoutRouter = require('./routes/CheckoutRouter');
 const userRouter = require('./routes/UserRouter');
+const orderRouter = require('./routes/OrderRouter');
 
 
 const app = express();
@@ -35,6 +36,7 @@ app.use(cookieSession({
 app.use('/api/products', productRouter);
 app.use('/api/checkout', checkoutRouter);
 app.use('/api/users', userRouter);
+app.use('/api/orders', orderRouter);
 
 
 module.exports = app;
