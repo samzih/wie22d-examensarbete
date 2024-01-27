@@ -196,14 +196,14 @@ const NavigationBar = () => {
                                                 </Dropdown.Toggle>
 
                                                 <Dropdown.Menu>
-                                                    <Dropdown.Item as={Link} >
+                                                    <Dropdown.Item as={Link} to='/user/profile'>
                                                         <Stack direction='horizontal' gap={2}>
                                                             <BsPersonFill size={20} />
                                                             Profil
                                                         </Stack>
                                                     </Dropdown.Item>
 
-                                                    <Dropdown.Item as={Link}>
+                                                    <Dropdown.Item as={Link} to='/user/orders'>
                                                         <Stack direction='horizontal' gap={2}>
                                                             <BsListUl size={20} />
                                                             Beställningar
