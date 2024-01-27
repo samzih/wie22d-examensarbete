@@ -24,7 +24,6 @@ function App() {
           <CartProvider>
 
             <div className='stickyFooter'>
-              <NavigationBar />
               <RegistrationNotification />
               <Routes>
                 <Route path='/' element={<Home />} />
@@ -36,7 +35,6 @@ function App() {
                   <Route path='orders' element={<UserOrders />} />
                 </Route>
               </Routes>
-              {/* <Footer /> */}
             </div>
 
           </CartProvider>

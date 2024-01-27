@@ -3,6 +3,7 @@ import { useCartContext } from '../context/CartContext'
 import { useSearchParams } from 'react-router-dom'
 import { Container, Row, Col, Stack, Button } from 'react-bootstrap'
 import { BsBagCheck } from 'react-icons/bs'
+import NavigationBar from '../components/layout/NavigationBar'
 
 
 function OrderConfirmation() {
@@ -37,6 +38,7 @@ function OrderConfirmation() {
 
     return (
         <>
+            <NavigationBar />
             {orderDetails ?
                 (
                     <Container className='text-center'>
