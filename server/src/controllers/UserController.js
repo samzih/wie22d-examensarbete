@@ -66,6 +66,13 @@ const login = async (req, res) => {
 
     // Save info about the user to the cookie session
     req.session = user;
+
+
+    // Delete some properties before sending response
+    delete user._id;
+    delete user.stripeCustomerID;
+    delete user.__v;
+
     res.status(200).json(user);
 }
 
@@ -81,4 +88,19 @@ const logout = async (req, res) => {
     res.status(204).json(null);
 }
 
-module.exports = { register, login, logout };
+
+const updateProfile = async (req, res) => {
+    const { body, session } = req;
+
+    // Check if first and lastname differ from the original
+    if (body.firstName == session.firstName && body.lastName == session.lastName) {
+        return res.status(422).json('Unable to update due to request data already matching current values');
+    }
+
+    const update = { firstName: body.firstName, lastName: body.lastName }
+    const updatedUser = await UserModel.findByIdAndUpdate(req.session._id, update, { new: true }).select('-_id -stripeCustomerID -__v');
+
+    res.status(200).json(updatedUser);
+}
+
+module.exports = { register, login, logout, updateProfile };
