@@ -4,6 +4,7 @@ import Nav from 'react-bootstrap/Nav'
 import { Link, NavLink } from 'react-router-dom'
 import Collapse from 'react-bootstrap/Collapse'
 import logo from '../../assets/bb-logo-blue.png'
+import { BsPerson, BsCart3, BsPersonFill, BsListUl, BsPersonWorkspace } from 'react-icons/bs'
 
 
 function SideBar() {
@@ -22,15 +23,30 @@ function SideBar() {
             <Nav variant='pills' defaultActiveKey='' className='flex-column mb-auto'>
 
                 <Nav.Item>
-                    <Nav.Link as={NavLink} to={'/user/profile'} eventKey='link-1'>Min profil</Nav.Link>
+                    <Nav.Link as={NavLink} to={'/user/profile'} eventKey='link-1'>
+                        <Stack direction='horizontal' gap={2}>
+                            <BsPersonFill size={20} />
+                            Min profil
+                        </Stack>
+                    </Nav.Link>
                 </Nav.Item>
 
                 <Nav.Item>
-                    <Nav.Link as={NavLink} to={'/user/orders'} eventKey='link-2'>Mina beställningar</Nav.Link>
+                    <Nav.Link as={NavLink} to={'/user/orders'} eventKey='link-2'>
+                        <Stack direction='horizontal' gap={2}>
+                            <BsCart3 size={20} />
+                            Mina beställningar
+                        </Stack>
+                    </Nav.Link>
                 </Nav.Item>
 
                 <Nav.Item>
-                    <Nav.Link as={Button} onClick={() => setOpen(!open)} variant='link' className='text-decoration-none'>Admin panel</Nav.Link>
+                    <Nav.Link as={Button} onClick={() => setOpen(!open)} variant='link' className='text-decoration-none'>
+                        <Stack direction='horizontal' gap={2}>
+                            <BsPersonWorkspace size={20} />
+                            Admin panel
+                        </Stack>
+                    </Nav.Link>
 
                     <Collapse in={open}>
                         <Container>
