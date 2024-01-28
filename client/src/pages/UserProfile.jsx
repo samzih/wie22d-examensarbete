@@ -5,8 +5,7 @@ import { BsPencilSquare } from 'react-icons/bs'
 
 
 function UserProfile() {
-    const { user } = useUserContext();
-    const [readOnly, setReadOnly] = useState(true);
+    const { user, updateProfile, readOnly, setReadOnly } = useUserContext();
 
 
     const handleEdit = () => {
@@ -14,10 +13,10 @@ function UserProfile() {
     }
 
 
-    const submitEdit = (e) => {
+    const submitUpdate = (e) => {
         e.preventDefault();
 
-        setReadOnly(!readOnly);
+        updateProfile(e);
     }
 
 
@@ -34,11 +33,11 @@ function UserProfile() {
                     <Stack gap={4} className='align-items-center'>
                         <Image className='object-fit-cover' width={200} height={200} src='' roundedCircle />
 
-                        <Form onReset={() => setReadOnly(true)} onSubmit={submitEdit} id='profileForm' className='w-50'>
+                        <Form onReset={() => setReadOnly(true)} onSubmit={submitUpdate} id='profileForm' className='w-50'>
                             <Form.Group className='mb-3' controlId='firstName'>
                                 <Form.Label>Förnamn</Form.Label>
                                 <InputGroup>
-                                    <Form.Control type='text' readOnly={readOnly} defaultValue={user && user.firstName} />
+                                    <Form.Control name='firstName' type='text' readOnly={readOnly} defaultValue={user && user.firstName} />
                                     <Button id='edit-btn-1' active={!readOnly} onClick={handleEdit}>
                                         <BsPencilSquare size={20} />
                                     </Button>
@@ -48,7 +47,7 @@ function UserProfile() {
                             <Form.Group className='mb-3' controlId='lastName'>
                                 <Form.Label>Efternamn</Form.Label>
                                 <InputGroup>
-                                    <Form.Control type='text' readOnly={readOnly} defaultValue={user && user.lastName} />
+                                    <Form.Control name='lastName' type='text' readOnly={readOnly} defaultValue={user && user.lastName} />
                                     <Button id='edit-btn-2' active={!readOnly} onClick={handleEdit}>
                                         <BsPencilSquare size={20} />
                                     </Button>
