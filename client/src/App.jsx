@@ -13,6 +13,7 @@ import User from './pages/User'
 import UserProfile from './pages/UserProfile'
 import UserOrders from './pages/UserOrders'
 import OrderProvider from './context/OrderContext'
+import AdminOrders from './pages/AdminOrders'
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
                   <Route path='/user' element={<User />}>
                     <Route path='profile' element={<UserProfile />} />
                     <Route path='orders' element={<UserOrders />} />
+                    <Route path='admin/orders' element={<AdminOrders />} />
                   </Route>
                 </Routes>
               </div>
