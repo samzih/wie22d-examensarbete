@@ -211,7 +211,7 @@ const NavigationBar = () => {
                                                     </Dropdown.Item>
 
                                                     {user.isAdmin &&
-                                                        <Dropdown.Item as={Link}>
+                                                        <Dropdown.Item as={Link} to='/user/admin/orders'>
                                                             <Stack direction='horizontal' gap={2}>
                                                                 <LuSettings2 size={20} />
                                                                 Admin panel
