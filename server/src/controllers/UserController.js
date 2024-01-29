@@ -5,7 +5,7 @@ const { UserModel } = require('../models/UserModel');
 
 
 const register = async (req, res) => {
-    const { firstName, lastName, email } = req.body;
+    const { firstName, lastName, email, password, adminCode } = req.body;
 
     // Check if user already exists (conflict)
     const existingUser = await UserModel.findOne({ email: email });
@@ -13,6 +13,12 @@ const register = async (req, res) => {
         return res.status(409).json('Email is already in use');
     }
 
+    // Check if the admin code is valid
+    if (adminCode) {
+        if (adminCode != process.env.ADMIN_CODE) {
+            return res.status(401).json('Incorrect admin code');
+        }
+    }
 
     // Create a customer on Stripe
     const customer = await stripe.customers.create({
@@ -24,7 +30,12 @@ const register = async (req, res) => {
     // Only if customer creation goes well on Stripe, create user in DB
     if (customer) {
         // Create user
-        const user = new UserModel(req.body);
+        const user = new UserModel({ firstName, lastName, email, password });
+
+        if (adminCode) {
+            user.isAdmin = true;
+        }
+
         user.stripeCustomerID = customer.id;
         user.password = await bcrypt.hash(user.password, 10);
         await user.save();

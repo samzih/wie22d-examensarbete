@@ -52,8 +52,11 @@ const UserProvider = ({ children }) => {
         }
 
         if (response.status === 409) {
-            const responseData = await response.json();
-            alert(responseData);
+            alert('E-postadress används redan');
+        }
+
+        if (response.status === 401) {
+            alert('Inkorrekt admin kod');
         }
     }
 
