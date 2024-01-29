@@ -1,8 +1,27 @@
-import { } from 'react'
+import { useEffect } from 'react'
 import { Button, Container, Table, FormCheck, Row, Col } from 'react-bootstrap'
+import { useOrderContext } from '../context/OrderContext'
+import formatDate from '../utils/formatDate'
 
 
 function AdminOrders() {
+    const { orders, getAllOrders, markAsSent } = useOrderContext();
+
+
+    useEffect(() => {
+        getAllOrders();
+    }, []);
+
+
+    const handleCheckbox = (e, orderId) => {
+        if (!e.target.checked) {
+            return
+        }
+
+        markAsSent(orderId);
+    }
+
+
     return (
         <>
             <Container>
@@ -31,19 +50,21 @@ function AdminOrders() {
                             </thead>
 
                             <tbody>
-                                <tr className='align-middle'>
-                                    <td>4738562289</td>
-                                    <td>2024-01-28 17:55</td>
-                                    <td>Förnamn Efternamn</td>
-                                    <td>förnamn.efternamn@gmail.com</td>
-                                    <td>12 999 kr</td>
-                                    <td className='text-center'>
-                                        <FormCheck id='shipped' type='radio' />
-                                    </td>
-                                    <td className='text-center'>
-                                        <Button variant='secondary' className='text-light'>Orderdetaljer</Button>
-                                    </td>
-                                </tr>
+                                {orders.map(order => (
+                                    <tr key={order.orderNumber} className='align-middle'>
+                                        <td>{order.orderNumber}</td>
+                                        <td>{formatDate(order.created)}</td>
+                                        <td>{`${order.customer.firstName} ${order.customer.lastName}`}</td>
+                                        <td>{order.customer.email}</td>
+                                        <td>{order.totalOrderPrice} kr</td>
+                                        <td className='text-center'>
+                                            <FormCheck name='sent' type='checkbox' checked={order.isSent} onChange={(e) => handleCheckbox(e, order._id)} />
+                                        </td>
+                                        <td className='text-center'>
+                                            <Button variant='secondary' className='text-light'>Orderdetaljer</Button>
+                                        </td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </Table>
 

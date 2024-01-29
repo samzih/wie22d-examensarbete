@@ -28,9 +28,7 @@ function UserOrders() {
                     <Col>
                         <Stack gap={5}>
                             {userOrders.map(order => {
-                                const { orderNumber, orderItems, created, totalOrderPrice } = order;
-
-                                const formattedDate = formatDate(created);
+                                const { orderNumber, isSent, orderItems, created, totalOrderPrice } = order;
 
                                 return (
                                     <Card key={orderNumber}>
@@ -44,7 +42,7 @@ function UserOrders() {
                                         <Card.Header className='bg-light-subtle'>
                                             <Stack direction='horizontal' gap={2}>
                                                 <p className='m-0'>Orderstatus:</p>
-                                                <p className='m-0 fw-medium'>Betald/Behandlas</p>
+                                                <p className='m-0 fw-medium'>{isSent ? 'Skickad' : 'Behandlas'}</p>
                                             </Stack>
                                         </Card.Header>
 
@@ -71,7 +69,7 @@ function UserOrders() {
                                         <Card.Footer className='py-1'>
                                             <Stack direction='horizontal' gap={2}>
                                                 <p className='m-0'>Beställningsdatum:</p>
-                                                <p className='m-0'>{formattedDate}</p>
+                                                <p className='m-0'>{formatDate(created)}</p>
                                             </Stack>
                                         </Card.Footer>
 
