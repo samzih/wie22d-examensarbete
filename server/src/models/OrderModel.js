@@ -17,6 +17,7 @@ const OrderSchema = new Schema({
     stripeOrderID: { type: String, required: true },
     created: { type: Number, required: true },
     totalOrderPrice: { type: Number, required: true },
+    isSent: { type: Boolean, required: true, default: false },
 });
 
 
