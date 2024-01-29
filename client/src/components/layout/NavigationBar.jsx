@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Container, Navbar, Nav, Badge, Stack, Image, OverlayTrigger, Popover, Button, CloseButton, Form, InputGroup, FloatingLabel, Dropdown } from 'react-bootstrap'
+import { Container, Navbar, Nav, Badge, Stack, Image, OverlayTrigger, Popover, Button, CloseButton, Form, InputGroup, FloatingLabel, Dropdown, Collapse } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { BsPerson, BsCart3, BsPersonFill, BsListUl } from 'react-icons/bs'
 import { LuSettings2 } from 'react-icons/lu'
@@ -15,6 +15,7 @@ const NavigationBar = () => {
     const [overlay, setOverlay] = useState();
     const [registerValidated, setRegisterValidated] = useState(false);
     const [loginValidated, setLoginValidated] = useState(false);
+    const [openAdminInput, setOpenAdminInput] = useState(false);
 
 
     // Calculates the total quantity of items in cart
@@ -74,7 +75,18 @@ const NavigationBar = () => {
         setShow(false);
         setLoginValidated(false);
         setRegisterValidated(false);
+        setOpenAdminInput(false);
     }
+
+
+    const handleCheck = () => {
+        setOpenAdminInput(!openAdminInput);
+    }
+
+
+    useEffect(() => {
+        setOverlay(register);
+    }, [openAdminInput]);
 
 
     const register = (
@@ -111,6 +123,16 @@ const NavigationBar = () => {
                             <Form.Control required minLength={6} autoComplete='new-password' name='password' type='password' placeholder='Lösenord' />
                             <Form.Control.Feedback type='invalid'>Ditt lösenord måste vara minst 6 tecken</Form.Control.Feedback>
                         </FloatingLabel>
+                    </Form.Group>
+
+                    <Form.Group className='mb-2'>
+                        <Form.Check id='admin' onChange={handleCheck} type='switch' label='Registrera dig som admin?' />
+
+                        <Collapse in={openAdminInput}>
+                            <div className='mb-1'>
+                                <Form.Control name='adminCode' placeholder='Admin kod' disabled={!openAdminInput} required={openAdminInput} />
+                            </div>
+                        </Collapse>
                     </Form.Group>
 
                     <p className='small text-center text-muted'>Härmed intygar jag att jag är minst 18 år och godkänner medlemsvillkoren.</p>
@@ -156,7 +178,7 @@ const NavigationBar = () => {
 
                     <Stack direction='horizontal' gap={1} className='align-items-center justify-content-center'>
                         <p className='m-0 fs-6 text-center'>Har du inget konto?</p>
-                        <Button type='button' onClick={() => setOverlay(register)} variant='link' className='fs-6 p-0 border-0 link-underline link-underline-opacity-0 link-underline-opacity-100-hover'>Bli medlem</Button>
+                        <Button type='button' onClick={() => { openAdminInput ? setOpenAdminInput(false) : setOverlay(register); }} variant='link' className='fs-6 p-0 border-0 link-underline link-underline-opacity-0 link-underline-opacity-100-hover'>Bli medlem</Button>
                     </Stack>
 
                 </Form>
