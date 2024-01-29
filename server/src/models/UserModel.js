@@ -19,7 +19,7 @@ const CreateUserSchema = Joi.object({
     lastName: Joi.string().strict().min(1).max(30).required(),
     email: Joi.string().email().strict().required(),
     password: Joi.string().min(6).strict().required(),
-    isAdmin: Joi.boolean().strict(),
+    adminCode: Joi.string().strict(),
 });
 
 
