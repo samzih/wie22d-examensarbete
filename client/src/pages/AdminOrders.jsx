@@ -1,14 +1,22 @@
 import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Button, Container, Table, FormCheck, Row, Col } from 'react-bootstrap'
 import { useOrderContext } from '../context/OrderContext'
+import { useUserContext } from '../context/UserContext'
 import formatDate from '../utils/formatDate'
 
 
 function AdminOrders() {
     const { orders, getAllOrders, markAsSent } = useOrderContext();
+    const { user } = useUserContext();
+    const navigate = useNavigate();
 
 
     useEffect(() => {
+        if (!user.isAdmin) {
+            return navigate('/user/profile');
+        }
+
         getAllOrders();
     }, []);
 

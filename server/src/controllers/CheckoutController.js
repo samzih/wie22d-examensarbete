@@ -54,7 +54,6 @@ const verifyStripeOrder = async (req, res) => {
 
                 return {
                     totalPrice: item.amount_total / 100,
-                    // discount: item.amount_discount,
                     product: item.description,
                     unitPrice: item.price.unit_amount / 100,
                     quantity: item.quantity,
@@ -66,6 +65,7 @@ const verifyStripeOrder = async (req, res) => {
             const orderItems = await Promise.all(orderItemsPromises);
 
             order = new OrderModel({
+                orderNumber: Math.floor(Math.random() * 9000000000) + 1,
                 customer: req.session._id,
                 orderItems: orderItems,
                 stripeOrderID: session.payment_intent,

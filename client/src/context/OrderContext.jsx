@@ -22,15 +22,22 @@ const OrderProvider = ({ children }) => {
     const getOrders = async () => {
         const response = await fetch('/api/orders/user');
         const data = await response.json();
-        setUserOrders(data);
+        setUserOrders(data.reverse());
     }
 
 
     // Get orders for all users
     const getAllOrders = async () => {
-        const response = await fetch('/api/orders/');
-        const data = await response.json();
-        setOrders(data.reverse());
+        try {
+            const response = await fetch('/api/orders/');
+
+            if (response.ok) {
+                const data = await response.json();
+                setOrders(data.reverse());
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
 
