@@ -53,7 +53,6 @@ function AdminOrders() {
                                     <th>E-postadress</th>
                                     <th>Orderbelopp</th>
                                     <th className='text-center'>Skickad</th>
-                                    <th className='text-center'>Åtgärder</th>
                                 </tr>
                             </thead>
 
@@ -67,9 +66,6 @@ function AdminOrders() {
                                         <td>{order.totalOrderPrice} kr</td>
                                         <td className='text-center'>
                                             <FormCheck name='sent' type='checkbox' checked={order.isSent} onChange={(e) => handleCheckbox(e, order._id)} />
-                                        </td>
-                                        <td className='text-center'>
-                                            <Button variant='secondary' className='text-light'>Orderdetaljer</Button>
                                         </td>
                                     </tr>
                                 ))}
