@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Container, Navbar, Nav, Badge, Stack, Image, OverlayTrigger, Popover, Button, CloseButton, Form, InputGroup, FloatingLabel, Dropdown, Collapse } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { BsPerson, BsCart3, BsPersonFill, BsListUl } from 'react-icons/bs'
+import { BsPerson, BsCart3, BsPersonFill } from 'react-icons/bs'
 import { LuSettings2 } from 'react-icons/lu'
 import { RxExit } from 'react-icons/rx'
 import logo from '../../assets/bb-logo-blue.png'
@@ -227,7 +227,7 @@ const NavigationBar = () => {
 
                                                     <Dropdown.Item as={Link} to='/user/orders'>
                                                         <Stack direction='horizontal' gap={2}>
-                                                            <BsListUl size={20} />
+                                                            <BsCart3 size={20} />
                                                             Beställningar
                                                         </Stack>
                                                     </Dropdown.Item>
