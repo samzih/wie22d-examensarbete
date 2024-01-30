@@ -4,7 +4,7 @@ import Nav from 'react-bootstrap/Nav'
 import { Link, NavLink } from 'react-router-dom'
 import Collapse from 'react-bootstrap/Collapse'
 import logo from '../../assets/bb-logo-blue.png'
-import { BsPerson, BsCart3, BsPersonFill, BsListUl, BsPersonWorkspace } from 'react-icons/bs'
+import { BsCart3, BsPersonFill, BsPersonWorkspace, BsTable, BsChevronDown } from 'react-icons/bs'
 
 
 function SideBar() {
@@ -45,6 +45,7 @@ function SideBar() {
                         <Stack direction='horizontal' gap={2}>
                             <BsPersonWorkspace size={20} />
                             Admin panel
+                            <BsChevronDown />
                         </Stack>
                     </Nav.Link>
 
@@ -52,11 +53,12 @@ function SideBar() {
                         <Container>
 
                             <Nav.Item>
-                                <Nav.Link as={NavLink} to={'/user/admin/products'} eventKey='link-3'>Produkter</Nav.Link>
-                            </Nav.Item>
-
-                            <Nav.Item>
-                                <Nav.Link as={NavLink} to={'/user/admin/orders'} eventKey='link-4'>Beställningar</Nav.Link>
+                                <Nav.Link as={NavLink} to={'/user/admin/orders'} eventKey='link-3'>
+                                    <Stack direction='horizontal' gap={2}>
+                                        <BsTable size={20} />
+                                        Beställningar
+                                    </Stack>
+                                </Nav.Link>
                             </Nav.Item>
 
                         </Container>
