@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Row, Col, Container, Image, Stack, Form, InputGroup, Button } from 'react-bootstrap'
 import { useUserContext } from '../context/UserContext'
 import { BsPencilSquare } from 'react-icons/bs'
+import avatar from '/default-avatar.jpg'
 
 
 function UserProfile() {
@@ -31,7 +32,7 @@ function UserProfile() {
             <Row>
                 <Col>
                     <Stack gap={4} className='align-items-center'>
-                        <Image className='object-fit-cover' width={200} height={200} src='' roundedCircle />
+                        <Image className='object-fit-cover' width={200} height={200} src={avatar} roundedCircle />
 
                         <Form onReset={() => setReadOnly(true)} onSubmit={submitUpdate} id='profileForm' className='w-50'>
                             <Form.Group className='mb-3' controlId='firstName'>
