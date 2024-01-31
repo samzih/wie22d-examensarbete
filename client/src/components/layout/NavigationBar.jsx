@@ -5,6 +5,7 @@ import { BsPerson, BsCart3, BsPersonFill } from 'react-icons/bs'
 import { LuSettings2 } from 'react-icons/lu'
 import { RxExit } from 'react-icons/rx'
 import logo from '../../assets/bb-logo-blue.png'
+import avatar from '/default-avatar.jpg'
 import { useCartContext } from '../../context/CartContext'
 import { useUserContext } from '../../context/UserContext'
 
@@ -209,11 +210,11 @@ const NavigationBar = () => {
                             {user ?
                                 (
                                     <Stack direction='horizontal' className='align-items-center justify-content-center' gap={2}>
-                                        <Image style={{ objectFit: 'cover' }} width={40} height={40} src='' roundedCircle />
+                                        <Image height={40} src={avatar} roundedCircle />
                                         <Stack direction='horizontal' gap={1} className='align-items-center'>
 
                                             <Dropdown>
-                                                <Dropdown.Toggle className='text-light text-decoration-none' variant='link'>
+                                                <Dropdown.Toggle className='text-light text-decoration-none p-0' variant='link'>
                                                     {`${user.firstName} ${user.lastName}`}
                                                 </Dropdown.Toggle>
 

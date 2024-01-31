@@ -54,7 +54,6 @@ const verifyStripeOrder = async (req, res) => {
 
                 return {
                     totalPrice: item.amount_total / 100,
-                    // discount: item.amount_discount,
                     product: item.description,
                     unitPrice: item.price.unit_amount / 100,
                     quantity: item.quantity,
@@ -66,6 +65,7 @@ const verifyStripeOrder = async (req, res) => {
             const orderItems = await Promise.all(orderItemsPromises);
 
             order = new OrderModel({
+                orderNumber: Math.floor(Math.random() * 9000000000) + 1,
                 customer: req.session._id,
                 orderItems: orderItems,
                 stripeOrderID: session.payment_intent,
@@ -78,10 +78,15 @@ const verifyStripeOrder = async (req, res) => {
 
         // Order from DB
         const existingOrder = await OrderModel.findOne({ stripeOrderID: session.payment_intent }).populate('customer');
+
+        if (!existingOrder) {
+            return res.status(404).json('Order could not be found in our database');
+        }
+
         const { orderNumber, totalOrderPrice, customer, ...rest } = existingOrder;
         const details = { orderNumber, totalOrderPrice, email: customer.email }
 
-        // Här kommer du hämta ut info för att visa på success sidan som order kostnad, kund email, ect.
+        // Information that is for the frontend confirmation/success page
         if (order) {
             req.session.stripeSessionID = null;
 
@@ -91,7 +96,6 @@ const verifyStripeOrder = async (req, res) => {
         }
 
     } catch (error) {
-        console.log(error);
         return res.status(error.statusCode).json(error.message);
     }
 }

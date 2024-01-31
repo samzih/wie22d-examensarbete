@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useCartContext } from '../context/CartContext'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { Container, Row, Col, Stack, Button, Spinner, Image } from 'react-bootstrap'
 import { BsBagCheck } from 'react-icons/bs'
 import NavigationBar from '../components/layout/NavigationBar'
@@ -80,8 +80,8 @@ function OrderConfirmation() {
                                     <Row>
                                         <Col className='mt-3 mb-5'>
                                             <Stack gap={3} direction='horizontal' className='justify-content-center'>
-                                                <Button variant='success' className='px-3'>Återgå till butiken</Button>
-                                                <Button variant='outline-secondary' className='px-3'>Visa orderhistorik</Button>
+                                                <Button as={Link} to='/' variant='success' className='px-3'>Återgå till butiken</Button>
+                                                <Button as={Link} to='/user/orders' variant='outline-secondary' className='px-3'>Visa orderhistorik</Button>
                                             </Stack>
                                         </Col>
                                     </Row>

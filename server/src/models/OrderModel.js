@@ -11,7 +11,7 @@ const OrderItemSchema = new Schema({
 
 
 const OrderSchema = new Schema({
-    orderNumber: { type: Number, required: true, default: Math.floor(Math.random() * 9000000000) + 1 },
+    orderNumber: { type: Number, required: true },
     customer: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     orderItems: { type: [OrderItemSchema], required: true },
     stripeOrderID: { type: String, required: true },

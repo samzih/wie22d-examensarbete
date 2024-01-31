@@ -1,10 +1,20 @@
-import { } from 'react'
-import { Outlet } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
 import SideBar from '../components/layout/SideBar'
 import { Col, Container, Row } from 'react-bootstrap'
+import { useUserContext } from '../context/UserContext'
 
 
 function User() {
+    const { user } = useUserContext();
+    const navigate = useNavigate();
+
+
+    useEffect(() => {
+        !user && navigate('/');
+    }, []);
+
+
     return (
         <>
             <Container fluid>

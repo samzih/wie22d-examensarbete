@@ -1,13 +1,14 @@
 import { useState } from 'react'
-import { Button, Container, Image, Stack } from 'react-bootstrap'
+import { Button, Container, Image, Stack, Collapse } from 'react-bootstrap'
 import Nav from 'react-bootstrap/Nav'
 import { Link, NavLink } from 'react-router-dom'
-import Collapse from 'react-bootstrap/Collapse'
 import logo from '../../assets/bb-logo-blue.png'
 import { BsCart3, BsPersonFill, BsPersonWorkspace, BsTable, BsChevronDown } from 'react-icons/bs'
+import { useUserContext } from '../../context/UserContext'
 
 
 function SideBar() {
+    const { user } = useUserContext();
     const [open, setOpen] = useState(false);
 
 
@@ -40,31 +41,33 @@ function SideBar() {
                     </Nav.Link>
                 </Nav.Item>
 
-                <Nav.Item>
-                    <Nav.Link as={Button} onClick={() => setOpen(!open)} variant='link' className='text-decoration-none'>
-                        <Stack direction='horizontal' gap={2}>
-                            <BsPersonWorkspace size={20} />
-                            Admin panel
-                            <BsChevronDown />
-                        </Stack>
-                    </Nav.Link>
+                {user.isAdmin &&
+                    <Nav.Item>
+                        <Nav.Link as={Button} onClick={() => setOpen(!open)} variant='link' className='text-decoration-none'>
+                            <Stack direction='horizontal' gap={2}>
+                                <BsPersonWorkspace size={20} />
+                                Admin panel
+                                <BsChevronDown />
+                            </Stack>
+                        </Nav.Link>
 
-                    <Collapse in={open}>
-                        <Container>
+                        <Collapse in={open}>
+                            <Container>
 
-                            <Nav.Item>
-                                <Nav.Link as={NavLink} to={'/user/admin/orders'} eventKey='link-3'>
-                                    <Stack direction='horizontal' gap={2}>
-                                        <BsTable size={20} />
-                                        Beställningar
-                                    </Stack>
-                                </Nav.Link>
-                            </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link as={NavLink} to={'/user/admin/orders'} eventKey='link-3'>
+                                        <Stack direction='horizontal' gap={2}>
+                                            <BsTable size={20} />
+                                            Alla beställningar
+                                        </Stack>
+                                    </Nav.Link>
+                                </Nav.Item>
 
-                        </Container>
-                    </Collapse>
+                            </Container>
+                        </Collapse>
 
-                </Nav.Item>
+                    </Nav.Item>
+                }
             </Nav>
         </>
     )
