@@ -2,8 +2,6 @@
 
 ## Overview
 
-### Link to GitHub repo: https://github.com/samzih/wie22d-examensarbete
-
 ### Project description
 This app was created as my final degree project and is a webshop that sells prebuilt desktop computers. It comes with Stripe intregration for the checkout process.
 
