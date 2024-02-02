@@ -28,7 +28,7 @@ The application is built using the MERN-stack.
 **From the repo:**
 1. Clone the project locally
 2. Install all the necessary dependencies using `npm install` in both the client and server directories
-3. In the server directory rename the *.env.example* file to simply *.env* and then provide both the Stripe API key and the MongoDB user credentionals
+3. In the server directory rename the *.env.example* file to simply *.env* and then provide both the Stripe API key and the MongoDB user credentials
 4. While being located in the server directory start the Express server with `npm run start`
 5. Then in the client directory start the React app with `npm run dev`
 6. Finally, navigate to [**localhost:5173**](http://localhost:5173) on your browser to view the webshop
