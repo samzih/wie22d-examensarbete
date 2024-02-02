@@ -14,7 +14,7 @@ function AdminOrders() {
 
     useEffect(() => {
         if (!user.isAdmin) {
-            return navigate('/user/profile');
+            return navigate('/unauthorized');
         }
 
         getAllOrders();

@@ -11,22 +11,24 @@ function User() {
 
 
     useEffect(() => {
-        !user && navigate('/');
+        !user && navigate('/unauthorized');
     }, []);
 
 
     return (
         <>
-            <Container fluid>
-                <Row className='min-vh-100'>
-                    <Col sm={3} className='p-3 text-bg-dark'>
-                        <SideBar />
-                    </Col>
-                    <Col sm={9} className='p-5'>
-                        <Outlet />
-                    </Col>
-                </Row>
-            </Container>
+            {user &&
+                <Container fluid>
+                    <Row className='min-vh-100'>
+                        <Col sm={3} className='p-3 text-bg-dark'>
+                            <SideBar />
+                        </Col>
+                        <Col sm={9} className='p-5'>
+                            <Outlet />
+                        </Col>
+                    </Row>
+                </Container>
+            }
         </>
     )
 }

@@ -14,6 +14,7 @@ import UserProfile from './pages/UserProfile'
 import UserOrders from './pages/UserOrders'
 import OrderProvider from './context/OrderContext'
 import AdminOrders from './pages/AdminOrders'
+import Unauthorized from './pages/Unauthorized'
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
                     <Route path='orders' element={<UserOrders />} />
                     <Route path='admin/orders' element={<AdminOrders />} />
                   </Route>
+                  <Route path='/unauthorized' element={<Unauthorized />} />
                 </Routes>
               </div>
 
