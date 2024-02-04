@@ -12,9 +12,11 @@ function Home() {
     const { products, fetchProducts, featuredProducts } = useProductContext();
     const [currentPage, setCurrentPage] = useState(1);
 
+
     useEffect(() => {
         fetchProducts();
     }, []);
+
 
     const handlePageChange = (page) => {
 
@@ -24,6 +26,7 @@ function Home() {
 
         setCurrentPage(page);
     }
+
 
     // Calculate the indexes of the current page
     const productsPerPage = 6;
