@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Link, useParams, } from 'react-router-dom'
 import { useProductContext } from '../context/ProductContext'
 import { useCartContext } from '../context/CartContext'
 
-import { Image, Container, Figure, Col, Row, Stack, Button, Breadcrumb } from 'react-bootstrap'
+import { Container, Figure, Col, Row, Stack, Button, Breadcrumb } from 'react-bootstrap'
 import NavigationBar from '../components/layout/NavigationBar'
 import Footer from '../components/layout/Footer'
 
@@ -32,7 +32,6 @@ function ProductDetail() {
                     </Row>
                     <Row className='align-items-start'>
                         <Col className='text-center'>
-                            {/* <Image width={500} src={product.images} /> */}
 
                             <Figure>
                                 <Figure.Image width={500} src={product.images} />

@@ -4,6 +4,7 @@ import { Container, Row, Col, Image } from 'react-bootstrap'
 import logo from '../../assets/bb-logo-blue.png'
 import { BsTwitterX, BsInstagram, BsVimeo } from 'react-icons/bs'
 
+
 function Footer() {
     return (
         <footer className='bg-dark mt-auto pt-4'>
